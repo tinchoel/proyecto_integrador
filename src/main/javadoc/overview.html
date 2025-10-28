@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Visión General del Proyecto - Sistema de Facturación QA</title>
+</head>
+<body>
+    <h1>Proyecto Integrador - Sistema de Facturación QA</h1>
+
+    <p>
+        Este proyecto es una aplicación Java modular desarrollada con Maven que 
+        simula un sistema de <strong>gestión y análisis de resultados de pruebas automatizadas</strong>
+        dentro del dominio de facturación. Su objetivo principal es procesar archivos CSV
+        que contienen resultados de test, validar su formato y generar reportes 
+        con estadísticas de ejecución.
+    </p>
+
+    <h2>Estructura del Proyecto</h2>
+    <p>
+        La aplicación sigue una arquitectura en capas, organizada en los siguientes paquetes:
+    </p>
+    <ul>
+        <li>
+            <b>com.qa.facturacion.model</b>: Contiene las clases de modelo de datos 
+            que representan los resultados de los tests (<code>TestCase</code>) y su 
+            estado (<code>TestStatus</code>).
+        </li>
+        <li>
+            <b>com.qa.facturacion.exception</b>: Define excepciones personalizadas 
+            utilizadas para manejar errores específicos durante la lectura y 
+            validación de archivos CSV.
+        </li>
+        <li>
+            <b>com.qa.facturacion.io</b>: Proporciona clases de entrada/salida, 
+            incluyendo la lectura de datos desde archivos CSV (<code>CsvTestReader</code>)
+            y la generación de reportes de salida (<code>ReportGenerator</code>).
+        </li>
+        <li>
+            <b>com.qa.facturacion.service</b>: Implementa la lógica de negocio para el 
+            cálculo de estadísticas (<code>TestStatistics</code>) y el modelado del 
+            reporte completo (<code>TestReport</code>).
+        </li>
+        <li>
+            <b>com.qa.facturacion</b>: Contiene la clase principal <code>App</code>,
+            punto de entrada de la aplicación.
+        </li>
+    </ul>
+
+    <h2>Flujo General de Ejecución</h2>
+    <ol>
+        <li>El usuario ejecuta la aplicación pasando como parámetros la ruta del CSV y el directorio de salida.</li>
+        <li>La clase <code>CsvTestReader</code> lee el archivo, validando cada línea y creando instancias de <code>TestCase</code>.</li>
+        <li>Los datos válidos se procesan por <code>TestStatistics</code> para generar un resumen con totales y porcentajes.</li>
+        <li><code>ReportGenerator</code> produce un archivo de salida con las estadísticas y los errores detectados.</li>
+        <li>Finalmente, <code>App</code> muestra el resultado por consola y registra la ejecución con <code>SLF4J</code>.</li>
+    </ol>
+
+    <h2>Dependencias</h2>
+    <ul>
+        <li><b>JUnit 5</b> – Framework de pruebas unitarias.</li>
+        <li><b>Apache Commons CSV</b> (opcional) – Utilizado para parsear archivos CSV.</li>
+        <li><b>SLF4J + SimpleLogger</b> – Sistema de logging ligero.</li>
+    </ul>
+
+    <h2>Ejemplo de Ejecución</h2>
+    <pre><code>java -jar proyecto-integrador-1.0-SNAPSHOT.jar tests-valid.csv salida/ --ignorar-cabecera</code></pre>
+
+    <h2>Convenciones y Buenas Prácticas</h2>
+    <ul>
+        <li>Separación de responsabilidades por paquete.</li>
+        <li>Métodos pequeños y fácilmente testeables.</li>
+        <li>Uso de <code>Optional</code> y Streams para un código más expresivo.</li>
+        <li>Documentación completa con Javadoc.</li>
+        <li>Excepciones específicas y controladas para errores de entrada.</li>
+    </ul>
+
+    <h2>Versión</h2>
+    <p>1.0 — Octubre 2025</p>
+
+    <hr>
+    <p><i>Autor: Martin Aguirre</i></p>
+</body>
+</html>

@@ -1,0 +1,11 @@
+# Archivos y carpetas generados por Maven
+/target/
+
+# Ignorar logs y archivos de salida
+*.log
+/out/
+
+# Ignorar archivos de configuración de IDEs
+.idea/
+*.iml
+.vscode/

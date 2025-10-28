@@ -1,0 +1,7 @@
+idTest,nombreTest,estado,tiempoEjecucion
+1,LoginTest,PASSED,0.45
+2,CreateInvoice,FAILED,1.20
+3,ExportReport,SKIPPED,0.00
+4,BadTime,PASSED,notanumber
+5,BadStatus,UNKNOWN,0.50
+6,EmptyLine,PASSED,0.70
