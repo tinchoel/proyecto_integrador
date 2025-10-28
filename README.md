@@ -31,27 +31,27 @@ Para compilar el proyecto y generar el archivo JAR ejecutable (*fat jar*), clona
 
 
 
-📋 Uso del Programa
+## 📋 Uso del Programa
 El programa se ejecuta a través de la línea de comandos, requiriendo la ruta del archivo de entrada y el directorio de salida.
 
-Formato de Ejecución
+## Formato de Ejecución
 Asegúrate de ejecutar el comando desde la raíz del proyecto (proyecto_integrador).
 
 java -jar target/proyecto_integrador-1.0-SNAPSHOT.jar <ruta_csv> <out_dir> [bandera]
 
-Argumentos	
+## Argumentos	
 
 Argumento		      		Descripción									                          					Ejemplo
 <ruta_csv>		      	Ruta del archivo CSV de entrada con los casos de prueba.		    tests.csv
 <out_dir>				      Ruta del directorio donde se guardarán los reportes generados.	out/
 [--ignorar-cabecera]	(Opcional) Bandera para omitir la primera línea del CSV.      	--ignorar-cabecera
 
-Ejemplo Completo
+## Ejemplo Completo
 
 java -jar target/proyecto_integrador-1.0-SNAPSHOT.jar tests.csv out/ --ignorar-cabecera
 
 
-💾 Estructura del CSV de Entrada
+## 💾 Estructura del CSV de Entrada
 El archivo de entrada (tests.csv) debe seguir estrictamente la siguiente estructura de 4 columnas, separadas por comas (,).
 
 Columna			  	  Tipo de Dato		Valores Válidos				  Descripción
@@ -61,7 +61,7 @@ estado				    String				  PASSED, FAILED, SKIPPED	Resultado final de la ejecuci�
 tiempoEjecucion		Double				  Numérico					      Tiempo de ejecución en segundos (ej. 1.25).
 
 
-Ejemplo de Contenido
+## Ejemplo de Contenido
 
 idTest,nombreTest,estado,tiempoEjecucion
 TC_001,Validar login,PASSED,0.342
@@ -69,7 +69,7 @@ TC_002,Facturacion masiva,FAILED,2.15
 TC_003,Chequeo de logs,PASSED,0.01
 
 
-📝 Archivos de Salida Generados
+## 📝 Archivos de Salida Generados
 El programa genera los siguientes archivos dentro del directorio de salida (out/):
 
 resumen.txt: Reporte legible con estadísticas de pruebas (total de casos, aprobados, fallidos, etc.).
