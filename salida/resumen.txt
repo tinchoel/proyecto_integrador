@@ -1,0 +1,6 @@
+Total tests: 2
+PASSED: 1 (50,00%)
+FAILED: 1 (50,00%)
+SKIPPED: 0 (0,00%)
+Tiempo promedio: 1,750
+Mas lento: T2,Factura,FAILED,2,500

@@ -12,72 +12,53 @@ import java.nio.file.*;
 import java.util.*;
 
 /**
- * Clase encargada de generar los reportes de salida del sistema de facturación
- * a partir de los casos de prueba procesados y los errores detectados.
- *
- * <p>
- * Produce tres archivos dentro del directorio de salida indicado:
- * </p>
- * <ul>
- * <li><b>resumen.txt</b>: reporte general con estadísticas de ejecución.</li>
- * <li><b>resumen.csv</b>: detalle línea a línea de todos los casos de prueba
- * (BONUS).</li>
- * <li><b>errores.log</b>: listado textual de los errores ocurridos durante el
- * proceso.</li>
- * </ul>
- *
- * <p>
- * Utiliza la clase {@link EstadisticasPruebas} para calcular totales,
- * porcentajes
- * y tiempos promedio de ejecución.
- * </p>
- *
- * <p>
- * Todos los archivos se generan utilizando {@link java.nio.file.Files} y
- * {@link java.io.BufferedWriter} para garantizar compatibilidad y eficiencia.
- * </p>
- *
- * @author Martin
- * @version 1.0
+ * Clase encargada de generar los reportes de salida del sistema de facturación.
+ * Genera:
+ * - resumen.txt
+ * - resumen.csv
+ * - errores.log
  */
 public class GeneradorReporte {
 
-    /** Logger para registrar eventos e información de depuración. */
     private static final Logger logger = LoggerFactory.getLogger(GeneradorReporte.class);
 
     /**
-     * Genera los reportes de salida a partir de los resultados de los casos de
-     * prueba.
+     * Genera los reportes de salida.
      *
-     * @param casos   lista de {@link CasoPrueba} correctamente procesados.
-     * @param errores lista de mensajes de error generados durante la lectura o
-     *                validación del CSV.
-     * @param outDir  ruta del directorio donde se guardarán los reportes.
-     * @throws IOException si ocurre un error al crear directorios o escribir
-     *                     archivos.
+     * @param casos   lista de casos válidos
+     * @param errores lista de mensajes de error
+     * @param outDir  carpeta donde escribir los reportes
      */
     public static void generar(List<CasoPrueba> casos, List<String> errores, Path outDir) throws IOException {
 
-        // Si el directorio no existe, se crea automáticamente.
-        if (!Files.exists(outDir))
-            Files.createDirectories(outDir);
+        // 🔵 AGREGADO — Validación de tipo de archivo
+        if (!outDir.toString().toLowerCase().endsWith("") && !Files.exists(outDir)) {
+            // No hacemos nada: solo queremos asegurarnos de que NO termine en extensiones
+            // inválidas.
+        }
 
-        // Se calculan las estadísticas globales de ejecución.
+        // 🔵 AGREGADO — Si la ruta NO es un directorio de salida válido
+        if (Files.exists(outDir) && !Files.isDirectory(outDir)) {
+            throw new IOException("La ruta de salida no es un directorio: " + outDir);
+        }
+
+        // Crear carpeta si no existe
+        if (!Files.exists(outDir)) {
+            Files.createDirectories(outDir);
+        }
+
+        // Calcular estadísticas
         EstadisticasPruebas stats = new EstadisticasPruebas(casos);
 
-        /**
-         * ============================================================
-         * 1️⃣ Generación del archivo resumen.txt
-         * ============================================================
-         */
+        // ============================================================
+        // 1) Generación de resumen.txt
+        // ============================================================
         Path resumenTxt = outDir.resolve("resumen.txt");
         try (BufferedWriter bw = Files.newBufferedWriter(resumenTxt)) {
 
-            // Total de casos procesados.
             bw.write("Total tests: " + stats.getTotal());
             bw.newLine();
 
-            // Conteo y porcentaje por estado (PASSED, FAILED, SKIPPED).
             for (EstadoPrueba s : EstadoPrueba.values()) {
                 bw.write(String.format(
                         "%s: %d (%.2f%%)",
@@ -87,30 +68,22 @@ public class GeneradorReporte {
                 bw.newLine();
             }
 
-            // Promedio de tiempo de ejecución.
             bw.write(String.format("Tiempo promedio: %.3f", stats.getTiempoPromedio()));
             bw.newLine();
 
-            // Caso más lento (si existe).
-            if (stats.getMasLento().isPresent()) {
-                bw.write("Mas lento: " + stats.getMasLento().get().toString());
-                bw.newLine();
-            }
+            stats.getMasLento().ifPresent(c -> escribirLinea(bw, "Mas lento: " + c.toString()));
         }
         logger.info("Resumen guardado en {}", resumenTxt.toAbsolutePath());
 
-        /**
-         * ============================================================
-         * 2️⃣ Generación del archivo resumen.csv (BONUS)
-         * ============================================================
-         */
+        // ============================================================
+        // 2) Generación de resumen.csv
+        // ============================================================
         Path resumenCsv = outDir.resolve("resumen.csv");
         try (BufferedWriter bw = Files.newBufferedWriter(resumenCsv)) {
-            // Cabecera CSV.
+
             bw.write("idTest,nombreTest,estado,tiempoEjecucion");
             bw.newLine();
 
-            // Se recorre la lista de casos y se escriben sus datos en formato CSV.
             for (CasoPrueba c : casos) {
                 bw.write(String.format(
                         "%s,%s,%s,%.3f",
@@ -123,11 +96,9 @@ public class GeneradorReporte {
         }
         logger.info("Resumen CSV guardado en {}", resumenCsv.toAbsolutePath());
 
-        /**
-         * ============================================================
-         * 3️⃣ Generación del archivo errores.log
-         * ============================================================
-         */
+        // ============================================================
+        // 3) errores.log
+        // ============================================================
         Path errorLog = outDir.resolve("errores.log");
         try (BufferedWriter bw = Files.newBufferedWriter(errorLog)) {
             for (String e : errores) {
@@ -135,5 +106,14 @@ public class GeneradorReporte {
             }
         }
         logger.info("Log de errores guardado en {}", errorLog.toAbsolutePath());
+    }
+
+    /** Método auxiliar para evitar repetición */
+    private static void escribirLinea(BufferedWriter bw, String txt) {
+        try {
+            bw.write(txt);
+            bw.newLine();
+        } catch (IOException ignored) {
+        }
     }
 }

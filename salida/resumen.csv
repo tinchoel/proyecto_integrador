@@ -1,0 +1,3 @@
+idTest,nombreTest,estado,tiempoEjecucion
+T1,Login,PASSED,1,000
+T2,Factura,FAILED,2,500

@@ -1,0 +1,6 @@
+Total tests: 15
+PASSED: 10 (66,67%)
+FAILED: 3 (20,00%)
+SKIPPED: 2 (13,33%)
+Tiempo promedio: 0,967
+Mas lento: TC014,Obtener movimientos,PASSED,2,800

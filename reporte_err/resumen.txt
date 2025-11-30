@@ -1,0 +1,6 @@
+Total tests: 8
+PASSED: 6 (75,00%)
+FAILED: 1 (12,50%)
+SKIPPED: 1 (12,50%)
+Tiempo promedio: 0,814
+Mas lento: TC007,Procesar pago,PASSED,2,300

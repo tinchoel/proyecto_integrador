@@ -1,11 +1,82 @@
-# Archivos y carpetas generados por Maven
-/target/
+###############################
+#   SISTEMA / OS
+###############################
+# Windows
+Thumbs.db
+Desktop.ini
 
-# Ignorar logs y archivos de salida
-*.log
-/out/
+# MacOS
+.DS_Store
+.AppleDouble
+.LSOverride
 
-# Ignorar archivos de configuración de IDEs
+###############################
+#   IDE / EDITORES
+###############################
+
+# VSCode
+.vscode/
+.history/
+*.code-workspace
+
+# IntelliJ / IDEA
 .idea/
 *.iml
-.vscode/
+out/
+
+# Eclipse
+.project
+.classpath
+.settings/
+bin/
+
+###############################
+#   JAVA / MAVEN
+###############################
+
+# Compiled class files
+*.class
+
+# Log files
+*.log
+
+# BlueJ
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Maven target dir
+target/
+
+# JAR, WAR, EAR generados
+*.jar
+*.war
+*.ear
+
+# Archivos de bloqueo
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+###############################
+#   ARCHIVOS TEMPORALES
+###############################
+*.tmp
+*.temp
+*.swp
+*.swo
+*.bak
+*.cache
+
+###############################
+#   SISTEMA DE CONTROL
+###############################
+# Git
+*.orig
+*.rej
+
+###############################
+#   ARCHIVOS DE EJEMPLO / TEST
+###############################
+# CSV de prueba 
+# /ejemplos/*.csv

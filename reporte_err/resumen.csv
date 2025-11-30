@@ -1,0 +1,9 @@
+idTest,nombreTest,estado,tiempoEjecucion
+TC001,Login usuario,PASSED,0,430
+TC002,Validación token,PASSED,0,210
+TC005,Actualizar perfil,PASSED,0,670
+TC006,Consultar saldo,SKIPPED,0,000
+TC007,Procesar pago,PASSED,2,300
+TC008,Reverso de pago,FAILED,1,770
+TC009,Descarga PDF,PASSED,0,990
+TC010,Enviar notificación,PASSED,0,140
