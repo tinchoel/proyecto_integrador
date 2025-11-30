@@ -1,79 +1,147 @@
-# 📊 Proyecto Integrador: Sistema de Reporte QA
+# 📊 Proyecto Integrador – Análisis de Casos de Prueba (CSV)
 
-Herramienta de procesamiento en Java diseñada para leer y validar resultados de casos de prueba desde un archivo CSV, generando un reporte final en formato de texto y CSV, además de un log de errores.
+Este proyecto implementa una aplicación en **Java 18 + Maven** que permite analizar un archivo CSV con resultados de casos de prueba (test cases), generar reportes automáticos y ofrecer un **menú interactivo en consola** para explorar las estadísticas.
 
----
-
-## 🚀 Requisitos y Tecnologías
-
-El proyecto fue desarrollado utilizando el ecosistema Java y Maven.
-
-| Tecnología | Versión | Propósito |
-| :--- | :--- | :--- |
-| **Java** | 18 | Lenguaje de programación principal. |
-| **Maven** | 3+ | Herramienta de gestión de dependencias y *build* (compilación). |
-| **SLF4J / Logback** | 2.0.9 / 1.4.11 | API y librería para el registro de eventos y logs. |
-| **iText** | 5.5.13.3 | Generación de reportes en formato PDF (si aplica). |
-| **JUnit** | 5.10.0 | Pruebas unitarias. |
+Incluye:
+- ✔ Lectura y validación de archivos CSV  
+- ✔ Manejo de errores detallado  
+- ✔ Generación automática de reportes  
+- ✔ Estadísticas completas de ejecución  
+- ✔ Menú interactivo de análisis  
+- ✔ Test unitarios (JUnit 5)  
+- ✔ Arquitectura orientada a servicios (SRP / Clean-ish)  
 
 ---
 
-## 🛠️ Instalación y Compilación
+## 🏗️ Tecnologías utilizadas
 
-Para compilar el proyecto y generar el archivo JAR ejecutable (*fat jar*), clona el repositorio y ejecuta el comando de *build* de Maven:
+- **Java 18**
+- **Maven**
+- **JUnit 5**
+- **SLF4J + Logback**
+- **Paradigma: POO + separación de capas**
 
-1. Clona el repositorio:
-   ```bash
-   git clone [https://github.com/tinchoel/proyecto_integrador.git](https://github.com/tinchoel/proyecto_integrador.git)
-   cd proyecto_integrador
-   
-2. Compila el proyecto (esto generará el archivo proyecto_integrador-1.0-SNAPSHOT.jar dentro de la carpeta target/): mvn clean install   
+---
 
+## 📁 Estructura del proyecto
 
+```
+/src
+ ├── main/java/com/martin/facturacion
+ │     ├── AplicacionPrincipal.java
+ │     ├── MenuConsola.java
+ │     ├── io/
+ │     │     ├── LectorCsv.java
+ │     │     └── GeneradorReporte.java
+ │     ├── modelo/
+ │     │     ├── CasoPrueba.java
+ │     │     └── EstadoPrueba.java
+ │     └── servicio/
+ │           └── EstadisticasPruebas.java
+ └── test/java/com/martin/facturacion
+       └── AplicacionPrincipalTest.java
+```
 
-## 📋 Uso del Programa
-El programa se ejecuta a través de la línea de comandos, requiriendo la ruta del archivo de entrada y el directorio de salida.
+---
 
-## Formato de Ejecución
-Asegúrate de ejecutar el comando desde la raíz del proyecto (proyecto_integrador).
+## ▶️ Ejecución del programa
 
-java -jar target/proyecto_integrador-1.0-SNAPSHOT.jar <ruta_csv> <out_dir> [bandera]
+Una vez compilado:
 
-## Argumentos	
+```bash
+mvn clean package
+```
 
-Argumento		      		Descripción									                          					Ejemplo
-<ruta_csv>		      	Ruta del archivo CSV de entrada con los casos de prueba.		    tests.csv
-<out_dir>				      Ruta del directorio donde se guardarán los reportes generados.	out/
-[--ignorar-cabecera]	(Opcional) Bandera para omitir la primera línea del CSV.      	--ignorar-cabecera
+Ejecutar la aplicación:
 
-## Ejemplo Completo
+```bash
+java -jar target/proyecto_integrador-1.0-SNAPSHOT.jar datos.csv salida --ignorar-cabecera
+```
 
-java -jar target/proyecto_integrador-1.0-SNAPSHOT.jar tests.csv out/ --ignorar-cabecera
+Parámetros:
+- `<ruta_csv>` → archivo CSV de entrada  
+- `<out_dir>` → carpeta donde se generarán los reportes  
+- `--ignorar-cabecera` opcional → omite la primera línea del CSV  
 
+---
 
-## 💾 Estructura del CSV de Entrada
-El archivo de entrada (tests.csv) debe seguir estrictamente la siguiente estructura de 4 columnas, separadas por comas (,).
+## 📄 Formato del CSV
 
-Columna			  	  Tipo de Dato		Valores Válidos				  Descripción
-idTest				    String			  	Alfanumérico				    Identificador único del caso de prueba.
-nombreTest		    String				  Texto						        Descripción del caso de prueba.
-estado				    String				  PASSED, FAILED, SKIPPED	Resultado final de la ejecución.
-tiempoEjecucion		Double				  Numérico					      Tiempo de ejecución en segundos (ej. 1.25).
-
-
-## Ejemplo de Contenido
-
+```
 idTest,nombreTest,estado,tiempoEjecucion
-TC_001,Validar login,PASSED,0.342
-TC_002,Facturacion masiva,FAILED,2.15
-TC_003,Chequeo de logs,PASSED,0.01
+T1,Login,PASSED,1.5
+T2,LoginInvalido,FAILED,2.0
+T3,Home,SKIPPED,0.5
+```
 
+---
 
-## 📝 Archivos de Salida Generados
-El programa genera los siguientes archivos dentro del directorio de salida (out/):
+## 🧪 Test Unitarios (JUnit 5)
 
-resumen.txt: Reporte legible con estadísticas de pruebas (total de casos, aprobados, fallidos, etc.).
+El proyecto incluye pruebas unitarias para validar:
 
-resumen.csv: Versión CSV del reporte final para procesamiento.
+- Archivo inexistente
+- Extensión inválida
+- CSV válido (generación de reportes)
+- Manejo del flag `--ignorar-cabecera`
+- Error cuando el output es un archivo
+- Validación de contenido generado
 
-errores.log: Registro de las líneas inválidas encontradas durante la lectura del archivo de entrada.
+Para ejecutarlos:
+
+```bash
+mvn test
+```
+
+---
+
+## 📊 Funcionalidades del menú interactivo
+
+Luego de generar los reportes, aparece un menú con opciones:
+
+**1. Ver estadísticas generales**
+- Total de casos
+- Conteo por estado
+- Promedios
+- Caso más lento
+
+**2. Buscar caso por ID**
+
+**3. Filtrar casos por estado**
+
+**4. Exportar resultados a un nuevo archivo**
+
+**0. Salir**
+
+---
+
+## 🧱 Arquitectura del proyecto
+
+La aplicación sigue **responsabilidades separadas**:
+
+- **AplicacionPrincipal** → entrada y validación inicial  
+- **LectorCsv** → parsing, validación y carga  
+- **GeneradorReporte** → creación de archivos (txt, csv, log)  
+- **EstadisticasPruebas** → cálculos y métricas  
+- **MenuConsola** → interacción con el usuario  
+- **Modelo** → representación limpia de datos  
+
+---
+
+## 🚀 Mejoras futuras (TODO)
+
+- Exportación JSON de estadísticas  
+- Manejo de múltiples archivos CSV  
+- Soporte para colores ANSI en el menú  
+- Integración con base de datos  
+- Web UI con Spring Boot  
+
+---
+
+## 🧑‍💻 Autor
+
+**Martín Aguirre**  
+Proyecto integrador – Curso Alkemy 2025  
+
+---
+
