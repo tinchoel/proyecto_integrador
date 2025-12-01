@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.martin.facturacion"},{"l":"com.martin.facturacion.excepciones"},{"l":"com.martin.facturacion.io"},{"l":"com.martin.facturacion.modelo"},{"l":"com.martin.facturacion.servicio"}];updateSearchResults();
